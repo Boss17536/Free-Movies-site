@@ -192,6 +192,7 @@ const App = {
         const q = this.searchInput.value.trim();
         if (!q) {
             this.searchResults.innerHTML = '';
+            this.searchResults.style.display = 'none';
             this.homeContainer.style.display = 'block';
             this.setZone('home');
             return;
@@ -200,6 +201,7 @@ const App = {
         this.homeContainer.style.display = 'none';
         this.episodesContainer.style.display = 'none';
         this.searchResults.innerHTML = '<div style="padding:14px;color:#888">Searching...</div>';
+        this.searchResults.style.display = 'block';
         
         try {
             const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&lang=${this.currentLang}`);
@@ -212,29 +214,35 @@ const App = {
 
     renderSearchResults(results) {
         this.searchResults.innerHTML = '';
-        if (!results.length) {
+        this.searchResults.style.display = 'block';
+
+        if (!results || !results.length) {
             this.searchResults.innerHTML = '<div style="padding:14px;color:#888">No results found</div>';
             return;
         }
 
         results.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'result-item nav-item';
-            
-            const badgeMap = {
-                'anime': '<span class="hi-badge" style="background:#e63946">ANIME</span>',
-                'tv': '<span class="hi-badge" style="background:#2d6a4f">TV</span>',
-                'movie': '<span class="hi-badge" style="background:#1d3557">MOVIE</span>'
-            };
-            const badge = badgeMap[item.media_type] || '';
-            const yearStr = item.year && item.year !== 'N/A' ? ` (${item.year})` : '';
-            
-            div.innerHTML = `[${item.media_type.toUpperCase()}] ${item.title}${yearStr} ${badge}`;
-            div.addEventListener('click', () => this.handleResultSelect(item));
-            this.searchResults.appendChild(div);
+            try {
+                const div = document.createElement('div');
+                div.className = 'result-item nav-item';
+                
+                const mediaType = item.media_type || 'unknown';
+                const badgeMap = {
+                    'anime': '<span class="hi-badge" style="background:#e63946">ANIME</span>',
+                    'tv': '<span class="hi-badge" style="background:#2d6a4f">TV</span>',
+                    'movie': '<span class="hi-badge" style="background:#1d3557">MOVIE</span>'
+                };
+                const badge = badgeMap[mediaType] || '';
+                const yearStr = item.year && item.year !== 'N/A' ? ` (${item.year})` : '';
+                
+                div.innerHTML = `[${mediaType.toUpperCase()}] ${item.title || 'Unknown Title'}${yearStr} ${badge}`;
+                div.addEventListener('click', () => this.handleResultSelect(item));
+                this.searchResults.appendChild(div);
+            } catch (e) {
+                console.error('Error rendering item:', e, item);
+            }
         });
 
-        this.searchResults.style.display = 'block';
         this.setZone('search');
     },
 

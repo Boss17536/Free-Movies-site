@@ -17,23 +17,14 @@ An optimized, minimalist streaming web application featuring a fast Node.js/Expr
 ### Prerequisites
 - **Node.js (v14+)**
 
-### Installation
+### 🚀 Deployment (Vercel)
 
-1. **Clone and Install:**
-   ```bash
-   npm install
-   ```
-
-2. **Configuration:**
-   Copy the example environment file:
-   ```bash
-   cp .env.example .env
-   ```
-   Add your **TMDB API v3 Key** to the `TMDB_API_KEY` field in `.env`.
-
-3. **Launch:**
-   - **Development:** `npm run dev` (uses nodemon)
-   - **Production:** `npm start`
+1. **Push to GitHub:** Your code is already prepared for Vercel with `vercel.json`.
+2. **Connect to Vercel:** Import your repository.
+3. **CRITICAL: Set Environment Variables:** 
+   In Vercel, go to **Settings** > **Environment Variables** and add:
+   - `TMDB_API_KEY`: Your TMDB API v3 Key.
+   - *Without this, search results will be empty on the live site.*
 
 ---
 
