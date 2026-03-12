@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Minimal Streaming</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Search View -->
+    <div id="search-view">
+        <div class="header">
+            <button id="lang-toggle" class="lang-btn hi-active nav-item">HI</button>
+            <input type="text" id="search-input" class="nav-item" placeholder="Search Movies, TV, Anime..." autocomplete="off">
+        </div>
+        
+        <!-- Home / Static Lists -->
+        <div id="home-container">
+            <div id="cw-section" style="display:none;">
+                <h3>Continue Watching</h3>
+                <div id="cw-container" class="horizontal-scroll"></div>
+            </div>
+            
+            <div id="history-section" style="display:none;">
+                <h3>Recently Watched</h3>
+                <div id="history-container" class="horizontal-scroll"></div>
+            </div>
+
+            <div id="top-indian-section">
+                <h3>Top 100 Indian Titles</h3>
+                <div id="top-indian-container" class="horizontal-scroll"></div>
+            </div>
+        </div>
+
+        <div id="search-results" style="display: none;"></div>
+        <div id="episodes-container" style="display: none;"></div>
+    </div>
+
+    <!-- Player View -->
+    <div id="player-view" style="display: none;">
+        <div id="player-header">
+            <button id="back-btn" class="nav-item" onclick="Player.close()">Back</button>
+            <h2 id="player-title"></h2>
+        </div>
+        <div id="player-wrapper"></div>
+    </div>
+
+    <script src="storage.js"></script>
+    <script src="player.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
